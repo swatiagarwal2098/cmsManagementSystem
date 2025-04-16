@@ -41,6 +41,7 @@ public class LoginDaoImpl implements LoginDao {
 				SqlQuery= "Select * from cms_user_info where userName ="+  "'"+logBean.getUserName()+"'";
 				RowMapper<LoginBean> mapper= (rs, rowNum)->{
 					LoginBean loginBeanObj = new LoginBean();
+					loginBeanObj.setUserId(rs.getString("userId"));
 					loginBeanObj.setUserName(rs.getString("userName"));
 					loginBeanObj.setPassword(rs.getString("password"));
 					return loginBeanObj;

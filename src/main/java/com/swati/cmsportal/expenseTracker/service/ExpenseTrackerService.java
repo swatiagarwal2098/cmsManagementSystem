@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.swati.cmsportal.cms.bean.LoginBean;
 import com.swati.cmsportal.expenseTracker.bean.ExpenseTrackerBean;
 import com.swati.cmsportal.expenseTracker.dao.ExpenseTrackerDao;
 
@@ -46,9 +47,9 @@ public class ExpenseTrackerService {
 		return hm;
 	}
 	
-	public Map<String, Object> getExpenseData(){
+	public Map<String, Object> getExpenseData(ExpenseTrackerBean expenseTrackerBean){
 		Map<String, Object> hm= new HashMap<String, Object>();
-		hm.put("expenseDataList", expenseTrackerDao.getExpenseData());
+		hm.put("expenseDataList", expenseTrackerDao.getExpenseData(expenseTrackerBean));
 		return hm;
 	}
 	

@@ -13,6 +13,7 @@ public class ExpenseTrackerBean {
 	private String amount;
 	private String itemId;
 	private String actionFlag;
+	private String userId;
 	
 	
 	public String getValue() {
@@ -80,6 +81,12 @@ public class ExpenseTrackerBean {
 	}
 	public void setActionFlag(String actionFlag) {
 		this.actionFlag = actionFlag;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	

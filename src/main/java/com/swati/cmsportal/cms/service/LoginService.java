@@ -3,6 +3,9 @@ package com.swati.cmsportal.cms.service;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +19,12 @@ public class LoginService {
 	@Autowired
 	private LoginDao loginDao;
 	
-	public Map<String, Object> checkLoginCredentials(LoginBean loginBean){
+	public Map<String, Object> checkLoginCredentials(LoginBean loginBean, HttpSession session, HttpServletRequest request){
 		
 		Map<String, Object> hm= new HashMap<String, Object>();
 		LoginBean loginBeanData= loginDao.checkLoginCredentials(loginBean);
 		if(loginBean.getUserName().equals(loginBeanData.getUserName()) && loginBean.getPassword().equals(loginBeanData.getPassword()) ) {
+			session.setAttribute("sessExpenseUserInfo", loginBeanData);
 			hm.put("result", "SUCCESS");
 		}else if(!loginBean.getUserName().equals(loginBeanData.getUserName())) {
 			hm.put("result", "INVALID USERNAME");

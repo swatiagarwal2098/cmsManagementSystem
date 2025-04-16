@@ -169,6 +169,7 @@ body {
 <body>
 <div ng-app="mainApp" ng-controller="expenseTrackerMaster" ng-init="onLoad()">
 <form>
+<input type="hidden" id="hdnUserId" name="hdnUserId" value="${userId}"/>
 	<div class="h2" >
 		<label style="font-size: 165%;padding-left: 0px;">
 		 <span style="color: white;font-weight:bold; ">Expense Tracker Master</span> 

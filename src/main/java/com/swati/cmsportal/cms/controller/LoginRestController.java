@@ -3,6 +3,9 @@ package com.swati.cmsportal.cms.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,15 +27,15 @@ public class LoginRestController {
 	
 	//method to validate user credentials
 	@RequestMapping(value="/checkLoginCredentials", method=RequestMethod.POST)
-	public ResponseEntity<Map<String, Object>> checkLoginCredentials(@RequestBody LoginBean loginBean){
+	public ResponseEntity<Map<String, Object>> checkLoginCredentials(@RequestBody LoginBean loginBean, HttpSession session, HttpServletRequest request){
 		Map<String, Object> hm= new HashMap<String, Object>();
-		hm= loginService.checkLoginCredentials(loginBean);
+		hm= loginService.checkLoginCredentials(loginBean,session, request);
 		return new ResponseEntity<Map<String, Object>>(hm, HttpStatus.OK);
 	}
 	
 	//method to create new user when user doesn't exist
 	@RequestMapping(value="/createNewUser", method=RequestMethod.POST)
-	public ResponseEntity<Map<String, Object>> createNewUser(@RequestBody LoginBean loginBean){
+	public ResponseEntity<Map<String, Object>> createNewUser(@RequestBody LoginBean loginBean, HttpServletRequest request, HttpSession session){
 		Map<String, Object> hm= new HashMap<String, Object>();
 		hm= loginService.createNewUser(loginBean);
 		return new ResponseEntity<Map<String, Object>>(hm, HttpStatus.OK);

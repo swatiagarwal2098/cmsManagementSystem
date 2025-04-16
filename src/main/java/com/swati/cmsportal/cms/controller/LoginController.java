@@ -31,6 +31,11 @@ public class LoginController {
 		return "cms/home";
 	}
 	
+	@RequestMapping(value="/logout", method=RequestMethod.GET)
+	public String displaylogoutPage() {
+		return "cms/logout";
+	}
+	
 	
 	
 }

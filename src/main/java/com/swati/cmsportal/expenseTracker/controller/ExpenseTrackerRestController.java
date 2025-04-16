@@ -3,6 +3,9 @@ package com.swati.cmsportal.expenseTracker.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+
+import com.swati.cmsportal.cms.bean.LoginBean;
 import com.swati.cmsportal.expenseTracker.bean.ExpenseTrackerBean;
 import com.swati.cmsportal.expenseTracker.service.ExpenseTrackerService;
 
@@ -49,9 +54,16 @@ public class ExpenseTrackerRestController {
 	}
 	
 	@RequestMapping(value="/getExpenseData", method= RequestMethod.POST)
-	public ResponseEntity<Map<String, Object>> getExpenseData(){
+	public ResponseEntity<Map<String, Object>> getExpenseData(HttpServletRequest request, HttpSession session){
 		Map<String, Object> hm= new HashMap<String, Object>();
-		hm= expenseTrackerService.getExpenseData();
+		LoginBean loginBean= new LoginBean();
+		ExpenseTrackerBean expenseBean= new ExpenseTrackerBean();
+		if(session.getAttribute("sessExpenseUserInfo")!=null) {
+			loginBean = (LoginBean)session.getAttribute("sessExpenseUserInfo");
+			expenseBean.setUserId(loginBean.getUserId());
+		}
+		System.out.println("ExpenseTrackerBean........."+expenseBean.getUserId());
+		hm= expenseTrackerService.getExpenseData(expenseBean);
 		return new ResponseEntity<Map<String, Object>>(hm, HttpStatus.OK);
 	}
 	

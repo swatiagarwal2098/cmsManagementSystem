@@ -7,6 +7,7 @@ public class LoginBean {
 	private String phoneNumber;
 	private String firstName;
 	private String lastName;
+	private String userId;
 	
 	public String getFirstName() {
 		return firstName;
@@ -40,4 +41,11 @@ public class LoginBean {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	
 }

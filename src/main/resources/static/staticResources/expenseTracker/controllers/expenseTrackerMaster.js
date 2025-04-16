@@ -49,6 +49,7 @@ mainApp.service('expenseService', function($http) {
 
 mainApp.controller("expenseTrackerMaster", function($scope,$http, $window, expenseCommonService, expenseService){
 	$scope.itemId='-1';
+	let userId= $("#hdnUserId").val();
 	$scope.onLoad= function(){
 		expenseCommonService.getMonthComboList($scope);
 		expenseCommonService.getCategoryComboList($scope);

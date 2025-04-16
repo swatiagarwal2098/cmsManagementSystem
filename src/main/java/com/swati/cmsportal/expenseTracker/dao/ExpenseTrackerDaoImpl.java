@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import com.swati.cmsportal.cms.bean.LoginBean;
 import com.swati.cmsportal.expenseTracker.bean.ExpenseTrackerBean;
 
 @Repository
@@ -79,10 +80,11 @@ public class ExpenseTrackerDaoImpl implements ExpenseTrackerDao {
 	}
 	
 	@Override
-	public List<ExpenseTrackerBean> getExpenseData(){
+	public List<ExpenseTrackerBean> getExpenseData(ExpenseTrackerBean expenseTrackerBean){
 		Calendar cal = Calendar.getInstance();
 		String currentMonth= new SimpleDateFormat("MMMMMMMM").format(cal.getTime());
-		String sqlQuery= "Select * from cms_user_expense_data where status=10 AND month="+"'"+currentMonth+"'"+" order by 1 desc";
+		String sqlQuery= "Select * from cms_user_expense_data where status=10 AND userid=" +"'"+expenseTrackerBean.getUserId()+"'" +" and month="+"'"+currentMonth+"'"+" order by 1 desc";
+		System.out.println("sqlQuery..."+sqlQuery);
 		RowMapper<ExpenseTrackerBean> mapper=(rs, rowNum)->{
 			ExpenseTrackerBean expenseBeanObj= new ExpenseTrackerBean();
 			expenseBeanObj.setMonth(rs.getString("month"));

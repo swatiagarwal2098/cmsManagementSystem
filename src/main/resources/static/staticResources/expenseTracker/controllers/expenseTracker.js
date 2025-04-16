@@ -7,7 +7,6 @@ mainApp.controller("expenseTracker", function($scope,$http, $window){
 	}
 	
 	$scope.openExpenseTrackerReport= function(){
-		alert("check")
 		$window.location.href = "report";
 	}
 });

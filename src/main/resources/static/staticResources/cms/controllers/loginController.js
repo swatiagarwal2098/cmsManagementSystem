@@ -13,6 +13,7 @@ mainApp.controller("loginController", function($scope,$http, $window){
 	}
 	
 	$scope.validateUser=function(){
+		alert("check..");
 		let userName=$("#userName").val();
 		let password= $("#password").val();
 		
