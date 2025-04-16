@@ -16,7 +16,7 @@
 <form>
 	
 	<div style="color: rgb(0,117,194);text-align: center;font-weight: bold;font-size: 16px;margin-top: 20px;">
-		Your Session has been expired<br>
+		Your Session has been expired!<br>
 	</div><br>
 	<div style="text-align: center;font-size: 13px;color: rgb(0,117,194);font-weight: bold">
 		<a href="/cmsportal/spring/login/loginPage">Click here</a> to logon to Central Workflow Portal <br><br>
