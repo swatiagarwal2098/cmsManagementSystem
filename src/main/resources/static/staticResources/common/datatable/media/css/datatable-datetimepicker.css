@@ -1,0 +1,35 @@
+.table>tbody>tr>td,.table>thead>tr>th,.table>tfoot>tr>th{
+	text-align: center !important;
+}
+
+table.table-condensed>thead>tr>th{
+	background-color : #fff !important;
+	border : none !important;
+	font-size : 12px !important;
+	font-weight : bold !important;
+}
+
+table.table-condensed>tbody>tr>td{			
+	font-size : 12px !important;
+}
+
+table.table-condensed>thead>tr:first-child>th:hover{
+	 background: #eeeeee !important;
+}
+
+table.table-condensed>tbody>tr:hover {
+  background-color : #fff !important;
+}
+
+table.table-condensed>tbody>tr>td {
+  border-top : none !important;
+}
+
+.table-condensed > tbody > tr > td, 
+.table-condensed > tbody > tr > th, 
+.table-condensed > tfoot > tr > td, 
+.table-condensed > tfoot > tr > th, 
+.table-condensed > thead > tr > td, 
+.table-condensed > thead > tr > th{
+	padding : 5px !important;
+}

@@ -7,12 +7,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.9/angular.min.js" ></script>
 
  	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" ></script>
- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js" ></script>
- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/dataTables.bootstrap.min.css" ></script>
+ 	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js" ></script> -->
+ 	<script src="/cmsportal/spring/staticResources/common/dataTable/media/js/jquery.dataTables.min.js"></script>
+ 	<script src="/cmsportal/spring/staticResources/common/dataTable/media/css/jquery.dataTables.min.1.10.19.css"></script>
  	<script type="text/javascript" src="/cmsportal/spring/staticResources/expenseTracker/controllers/expenseTrackerReport.js"></script>
  	<script type="text/javascript" src="/cmsportal/spring/staticResources/expenseTracker/services/expenseCommonService.js"></script>
  	<script type="text/javascript" src="/cmsportal/spring/staticResources/common/scripts/svgImageButton.js"></script>
-
 <style>
 
 body {
@@ -245,7 +245,7 @@ body {
  
  
  
- 	<div id="tableDiv" ng-show="showTableDiv" class="table-scr"  style="color: #000; max-height: 42%; width: 96%; overflow: auto; margin-top: 20px; margin-left: 90px;" ng-cloak>
+ 	 <div id="tableDiv" ng-show="showTableDiv" class="table-scr"  style="color: #000; max-height: 42%; width: 96%; overflow: auto; margin-top: 20px; margin-left: 90px;" ng-cloak>
 		<table width="100%" id="dataTable" class="table table-bordered table-responsive" border="0"cellpadding="0" cellspacing="0" bordercolor="#3B6E93"style="border-collapse: collapse;">
 			<thead>
 				<tr>
@@ -259,7 +259,24 @@ body {
 				</tr>
 			</thead>
 		</table>
-	</div>
+	</div> 
+	
+	<!-- <div id="tableDiv" class="table-scr" style="width:100%">
+			<table width="100%" id="dataTable" class="display" border="0" cellpadding="0" cellspacing="0" bordercolor="#3B6E93" style="border-collapse: collapse;">
+				<thead>
+					<tr>
+				 	<th >Month</th>
+					<th >Expense Made By</th>
+					<th >Date</th>
+					<th >Category</th>
+					<th >Payment Mode</th>
+					<th >Desc</th>
+					<th >Amount</th>
+				</tr>
+				</thead>
+				
+			</table>													
+		</div> -->
 	
 	
 </form>

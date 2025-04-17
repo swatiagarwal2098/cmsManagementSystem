@@ -47,9 +47,17 @@ public class ExpenseTrackerRestController {
 	}
 	
 	@RequestMapping(value="/addExpenseData", method= RequestMethod.POST)
-	public ResponseEntity<Map<String, Object>> addExpenseData(@RequestBody ExpenseTrackerBean expenseTrackerBean){
+	public ResponseEntity<Map<String, Object>> addExpenseData(@RequestBody ExpenseTrackerBean expenseTrackerBean,HttpServletRequest request, HttpSession session){
 		Map<String, Object> hm= new HashMap<String, Object>();
-		hm= expenseTrackerService.addExpenseData(expenseTrackerBean);
+		LoginBean loginBean= new LoginBean();
+		System.out.println("session.getAttribute(\"sessExpenseUserInfo\")...."+session.getAttribute("sessExpenseUserInfo"));
+		if(session.getAttribute("sessExpenseUserInfo")!=null) {
+			loginBean = (LoginBean)session.getAttribute("sessExpenseUserInfo");
+			expenseTrackerBean.setUserId(loginBean.getUserId());
+			hm= expenseTrackerService.addExpenseData(expenseTrackerBean);
+		}else {
+			hm.put("sessionExpired",  "Y");
+		}
 		return new ResponseEntity<Map<String, Object>>(hm, HttpStatus.OK);
 	}
 	
@@ -61,16 +69,24 @@ public class ExpenseTrackerRestController {
 		if(session.getAttribute("sessExpenseUserInfo")!=null) {
 			loginBean = (LoginBean)session.getAttribute("sessExpenseUserInfo");
 			expenseBean.setUserId(loginBean.getUserId());
+			hm= expenseTrackerService.getExpenseData(expenseBean);
+		}else {
+			hm.put("sessionExpired", "Y");
 		}
-		System.out.println("ExpenseTrackerBean........."+expenseBean.getUserId());
-		hm= expenseTrackerService.getExpenseData(expenseBean);
 		return new ResponseEntity<Map<String, Object>>(hm, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/getExpenseDataRecord", method= RequestMethod.POST)
-	public ResponseEntity<Map<String, Object>> getExpenseDataRecord(@RequestBody ExpenseTrackerBean expenseTrackerBean ){
+	public ResponseEntity<Map<String, Object>> getExpenseDataRecord(@RequestBody ExpenseTrackerBean expenseTrackerBean,HttpServletRequest request, HttpSession session ){
 		Map<String, Object> hm= new HashMap<String, Object>();
-		hm= expenseTrackerService.getExpenseDataRecord(expenseTrackerBean);
+		LoginBean loginBean= new LoginBean();
+		if(session.getAttribute("sessExpenseUserInfo")!=null) {
+			loginBean = (LoginBean)session.getAttribute("sessExpenseUserInfo");
+			expenseTrackerBean.setUserId(loginBean.getUserId());
+			hm= expenseTrackerService.getExpenseDataRecord(expenseTrackerBean);
+		}else {
+			hm.put("sessionExpired", "Y");
+		}
 		return new ResponseEntity<Map<String, Object>>(hm, HttpStatus.OK);
 	}
 	

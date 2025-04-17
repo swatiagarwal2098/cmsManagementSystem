@@ -104,7 +104,7 @@ public class ExpenseTrackerDaoImpl implements ExpenseTrackerDao {
 	@Override
 	public ExpenseTrackerBean getExpenseDataRecord(ExpenseTrackerBean expenseTrackerBean){
 		ExpenseTrackerBean expenseBean= new ExpenseTrackerBean();
-		String sqlQuery= "Select * from cms_user_expense_data where id="+"'"+expenseTrackerBean.getItemId()+"'"+ " AND STATUS='10'";
+		String sqlQuery= "Select * from cms_user_expense_data where id="+"'"+expenseTrackerBean.getItemId()+"'"+ " AND STATUS='10' AND userId="+"'"+expenseTrackerBean.getUserId()+"'";
 		System.out.println("sqlQuery........."+sqlQuery);
 		RowMapper<ExpenseTrackerBean> mapper=(rs, rowNum)->{
 			ExpenseTrackerBean expenseBeanObj= new ExpenseTrackerBean();
