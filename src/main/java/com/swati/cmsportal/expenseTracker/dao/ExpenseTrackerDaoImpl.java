@@ -2,7 +2,9 @@ package com.swati.cmsportal.expenseTracker.dao;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -32,9 +34,7 @@ public class ExpenseTrackerDaoImpl implements ExpenseTrackerDao {
 			expenseTrackerBean.setKey(rs.getString("month"));
 			expenseTrackerBean.setValue(rs.getString("month"));
 			return expenseTrackerBean;
-			
 		};
-		
 		List<ExpenseTrackerBean> monthComboList = jdbcTemplateObject.query(sqlQuery, mapper);
 		return monthComboList;
 	}
@@ -70,10 +70,12 @@ public class ExpenseTrackerDaoImpl implements ExpenseTrackerDao {
 	@Override
 	public int addExpenseData(ExpenseTrackerBean expenseTrackerBean){
 		int result=0;
+		String strSql="SELECT firstName from cms_user_info where userId="+"'"+expenseTrackerBean.getUserId()+"'";
+		String firstName=jdbcTemplateObject.queryForObject(strSql, String.class);
 		if("ADD".equals(expenseTrackerBean.getActionFlag())) {
-			result= jdbcTemplateObject.update("INSERT INTO cms_user_expense_data (month, expenseMadeBy, date, category, paymentMode, description, amount) VALUES ('" + expenseTrackerBean.getMonth() + "', '" + expenseTrackerBean.getExpenseMadeBy() + "','" + expenseTrackerBean.getDate() + "', '" + expenseTrackerBean.getCategory() + "', '" + expenseTrackerBean.getPaymentMode() + "', '" + expenseTrackerBean.getDesc() + "',  '" + expenseTrackerBean.getAmount() + "' )");
+			result= jdbcTemplateObject.update("INSERT INTO cms_user_expense_data (month, date, category, paymentMode, description, amount, userId, firstName) VALUES ('" + expenseTrackerBean.getMonth() + "', '" + expenseTrackerBean.getDate() + "', '" + expenseTrackerBean.getCategory() + "', '" + expenseTrackerBean.getPaymentMode() + "', '" + expenseTrackerBean.getDesc() + "',  '" + expenseTrackerBean.getAmount() + "', '" + expenseTrackerBean.getUserId() + "','" + firstName + "' )");
 		}else if("UPDATE".equals(expenseTrackerBean.getActionFlag())) {
-			String updateQuery="UPDATE cms_user_expense_data SET month = '" + expenseTrackerBean.getMonth() + "', expenseMadeBy= '" + expenseTrackerBean.getExpenseMadeBy() + "', date = '" + expenseTrackerBean.getDate() + "', category = '" + expenseTrackerBean.getCategory() + "', paymentMode = '" + expenseTrackerBean.getPaymentMode() + "',description = '" + expenseTrackerBean.getDesc() + "',amount = '" + expenseTrackerBean.getAmount() + "'"+ "WHERE id="+expenseTrackerBean.getItemId();
+			String updateQuery="UPDATE cms_user_expense_data SET month = '" + expenseTrackerBean.getMonth() + "', date = '" + expenseTrackerBean.getDate() + "', category = '" + expenseTrackerBean.getCategory() + "', paymentMode = '" + expenseTrackerBean.getPaymentMode() + "',description = '" + expenseTrackerBean.getDesc() + "',amount = '" + expenseTrackerBean.getAmount() + "'"+ "WHERE id="+expenseTrackerBean.getItemId();
 			result= jdbcTemplateObject.update(updateQuery);
 		}
 		return result;
@@ -82,13 +84,13 @@ public class ExpenseTrackerDaoImpl implements ExpenseTrackerDao {
 	@Override
 	public List<ExpenseTrackerBean> getExpenseData(ExpenseTrackerBean expenseTrackerBean){
 		Calendar cal = Calendar.getInstance();
-		String currentMonth= new SimpleDateFormat("MMMMMMMM").format(cal.getTime());
-		String sqlQuery= "Select * from cms_user_expense_data where status=10 AND userid=" +"'"+expenseTrackerBean.getUserId()+"'" +" and month="+"'"+currentMonth+"'"+" order by 1 desc";
-		System.out.println("sqlQuery..."+sqlQuery);
+		//String currentMonth= new SimpleDateFormat("MMMMMMMM").format(cal.getTime());
+		String sqlQuery="";
+		sqlQuery= "Select * from cms_user_expense_data where status=10 AND userid=" +"'"+expenseTrackerBean.getUserId()+"'" +" order by 1 desc";
 		RowMapper<ExpenseTrackerBean> mapper=(rs, rowNum)->{
 			ExpenseTrackerBean expenseBeanObj= new ExpenseTrackerBean();
 			expenseBeanObj.setMonth(rs.getString("month"));
-			expenseBeanObj.setExpenseMadeBy(rs.getString("expenseMadeBy"));
+			//expenseBeanObj.setExpenseMadeBy(rs.getString("expenseMadeBy"));
 			expenseBeanObj.setDate(rs.getString("date"));
 			expenseBeanObj.setCategory(rs.getString("category"));
 			expenseBeanObj.setPaymentMode(rs.getString("paymentMode"));
@@ -109,7 +111,7 @@ public class ExpenseTrackerDaoImpl implements ExpenseTrackerDao {
 		RowMapper<ExpenseTrackerBean> mapper=(rs, rowNum)->{
 			ExpenseTrackerBean expenseBeanObj= new ExpenseTrackerBean();
 			expenseBeanObj.setMonth(rs.getString("month"));
-			expenseBeanObj.setExpenseMadeBy(rs.getString("expenseMadeBy"));
+			//expenseBeanObj.setExpenseMadeBy(rs.getString("expenseMadeBy"));
 			expenseBeanObj.setDate(rs.getString("date"));
 			expenseBeanObj.setCategory(rs.getString("category"));
 			expenseBeanObj.setPaymentMode(rs.getString("paymentMode"));
@@ -132,19 +134,26 @@ public class ExpenseTrackerDaoImpl implements ExpenseTrackerDao {
 	
 	@Override
 	public List<ExpenseTrackerBean> getExpenseTrackerDataReportList( ExpenseTrackerBean expenseTrackerBean){
-		System.out.println("expenseTrackerBean...."+expenseTrackerBean.getMonth());
 		String strAppendQuery="";
-		strAppendQuery= " userId="+"'"+expenseTrackerBean.getUserId()+"'"+" and month= "+"'"+expenseTrackerBean.getMonth()+"'"+" and category="+"'"+expenseTrackerBean.getCategory()+"'"+" and paymentMode="+"'"+expenseTrackerBean.getPaymentMode()+"'";
-		if("-1".equals(expenseTrackerBean.getMonth())) {
-			strAppendQuery= " userId="+"'"+expenseTrackerBean.getUserId()+"'"+" and category="+"'"+expenseTrackerBean.getCategory()+"'"+" and paymentMode="+"'"+expenseTrackerBean.getPaymentMode()+"'";
-		}
 		
-		String sqlQuery= "Select * from cms_user_expense_data where "+strAppendQuery;
+		if("1".equals(expenseTrackerBean.getUserId())) {   // for admin
+			strAppendQuery= " and month= "+"'"+expenseTrackerBean.getMonth()+"'"+" and category="+"'"+expenseTrackerBean.getCategory()+"'"+" and paymentMode="+"'"+expenseTrackerBean.getPaymentMode()+"'";
+			if("-1".equals(expenseTrackerBean.getMonth())) {
+				strAppendQuery= " and category="+"'"+expenseTrackerBean.getCategory()+"'"+" and paymentMode="+"'"+expenseTrackerBean.getPaymentMode()+"'";
+			}
+		}else if(!"1".equals(expenseTrackerBean.getUserId())) {
+			strAppendQuery= " and userId="+"'"+expenseTrackerBean.getUserId()+"'"+" and month= "+"'"+expenseTrackerBean.getMonth()+"'"+" and category="+"'"+expenseTrackerBean.getCategory()+"'"+" and paymentMode="+"'"+expenseTrackerBean.getPaymentMode()+"'";
+			if("-1".equals(expenseTrackerBean.getMonth())) {
+				strAppendQuery= " and userId="+"'"+expenseTrackerBean.getUserId()+"'"+" and category="+"'"+expenseTrackerBean.getCategory()+"'"+" and paymentMode="+"'"+expenseTrackerBean.getPaymentMode()+"'";
+			}
+			
+		}
+		String sqlQuery= "Select * from cms_user_expense_data where status='10' "+strAppendQuery;
 		System.out.println("sqlQuery..."+sqlQuery);
 		RowMapper<ExpenseTrackerBean> mapper=(rs, rowNum)->{
 			ExpenseTrackerBean expenseBeanObj= new ExpenseTrackerBean();
 			expenseBeanObj.setMonth(rs.getString("month"));
-			expenseBeanObj.setExpenseMadeBy(rs.getString("expenseMadeBy"));
+			expenseBeanObj.setExpenseMadeBy(rs.getString("firstName"));
 			expenseBeanObj.setDate(rs.getString("date"));
 			expenseBeanObj.setCategory(rs.getString("category"));
 			expenseBeanObj.setPaymentMode(rs.getString("paymentMode"));
@@ -157,5 +166,10 @@ public class ExpenseTrackerDaoImpl implements ExpenseTrackerDao {
 		List<ExpenseTrackerBean> expenseTrackerDataReportList= jdbcTemplateObject.query(sqlQuery, mapper);
 		return expenseTrackerDataReportList;
 	}
+	
+	
+	
+	
+	
 
 }

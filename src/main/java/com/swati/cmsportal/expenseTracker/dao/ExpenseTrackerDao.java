@@ -24,6 +24,7 @@ public interface ExpenseTrackerDao {
 
 	List<ExpenseTrackerBean> getExpenseTrackerDataReportList(ExpenseTrackerBean expenseTrackerBean);
 
+
 	
 
 

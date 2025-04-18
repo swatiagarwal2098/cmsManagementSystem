@@ -7,7 +7,7 @@ mainApp.service('expenseService', function($http) {
 	
 	this.validateAddExpenseData= function(){
 		let month= $("#month").val();
-		let expenseMadeBy= $("#expenseMadeBy").val();
+		//let expenseMadeBy= $("#expenseMadeBy").val();
 		let date= $("#date").val();
 		let category= $("#category").val();
 		let paymentMode= $("#paymentMode").val();
@@ -16,10 +16,6 @@ mainApp.service('expenseService', function($http) {
 		if(month== null || month=='-1'){
 			alert("Select month");
 			$("#month").focus();
-			return false;
-		}else if(expenseMadeBy== null || expenseMadeBy =='-1'){
-			alert("Select expense made by");
-			$("#expenseMadeBy").focus();
 			return false;
 		}else if(date== null || date ==''){
 			alert("Select date");
@@ -69,7 +65,7 @@ mainApp.controller("expenseTrackerMaster", function($scope,$http, $window, expen
 				let expenseItemRecord= data.expenseItemRecord;
 				$scope.itemId=expenseItemRecord.itemId;
 				$scope.month = {'key':expenseItemRecord.month};
-				$("#expenseMadeBy").val(expenseItemRecord.expenseMadeBy);
+				//$("#expenseMadeBy").val(expenseItemRecord.expenseMadeBy);
 				$('#date').val(expenseItemRecord.date);
 				$scope.category = {'key':expenseItemRecord.category};
 				$scope.paymentMode = {'key':expenseItemRecord.paymentMode};
@@ -87,8 +83,9 @@ mainApp.controller("expenseTrackerMaster", function($scope,$http, $window, expen
 	}
 	
 	$scope.addUpdateExpenseData= function(flag){
+		alert("ad.....");
 		let month= $("#month").val();
-		let expenseMadeBy= $("#expenseMadeBy").val();
+		//let expenseMadeBy= $("#expenseMadeBy").val();
 		let date= $("#date").val();
 		let category= $("#category").val();
 		let paymentMode= $("#paymentMode").val();
@@ -102,10 +99,10 @@ mainApp.controller("expenseTrackerMaster", function($scope,$http, $window, expen
 		}
 		let url= "addExpenseData";
 		if(flag=='ADD'){
-			inputJson= {'month' : month, 'expenseMadeBy' : expenseMadeBy, 'date' : date, 'category': category, 'paymentMode': paymentMode, 'desc': desc, 'amount': amount, 'actionFlag': actionFlag};
+			inputJson= {'month' : month, 'date' : date, 'category': category, 'paymentMode': paymentMode, 'desc': desc, 'amount': amount, 'actionFlag': actionFlag};
 
 		}else if(flag=='UPDATE'){
-			inputJson= {'itemId': $scope.itemId, 'month' : month, 'expenseMadeBy' : expenseMadeBy, 'date' : date, 'category': category, 'paymentMode': paymentMode, 'desc': desc, 'amount': amount, 'actionFlag': actionFlag};
+			inputJson= {'itemId': $scope.itemId, 'month' : month, 'date' : date, 'category': category, 'paymentMode': paymentMode, 'desc': desc, 'amount': amount, 'actionFlag': actionFlag};
 		}
 		
 		let responsePromise= $http.post(url,inputJson);

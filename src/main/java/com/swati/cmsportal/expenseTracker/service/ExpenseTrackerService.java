@@ -1,24 +1,48 @@
 package com.swati.cmsportal.expenseTracker.service;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.swati.cmsportal.cms.bean.LoginBean;
 import com.swati.cmsportal.expenseTracker.bean.ExpenseTrackerBean;
 import com.swati.cmsportal.expenseTracker.dao.ExpenseTrackerDao;
+
+
+
 
 @Service
 public class ExpenseTrackerService {
 	
 	@Autowired
 	private ExpenseTrackerDao expenseTrackerDao;
+	
+	
+	@Autowired
+	private ExcelWriting excelWriting;
+	
+	@Autowired
+	private ExpenseMainService expenseMainService;
+	
+	
+	private Map<String, Object> writeExcelReport(ExpenseTrackerBean expenseTrackerBean, List<ExpenseTrackerBean> reportDataList,String strAction) {
+		
+		Map<String, Object> resultMap = new LinkedHashMap<>();
+		try {
+			
+			Workbook workbook = null;
+			workbook = excelWriting.exportToExcel(expenseTrackerBean, reportDataList, strAction);
+			resultMap = expenseMainService.downloadExcelFile(workbook, expenseTrackerBean);
+			
+		}catch (Exception e) {
+			System.out.println("Error.................");
+		}
+		return resultMap;
+	}
 	
 	public Map<String, Object> getMonthComboList(){
 		Map<String, Object> hm= new HashMap<String, Object>();
@@ -77,22 +101,18 @@ public class ExpenseTrackerService {
 	public Map<String, Object> getExpenseTrackerDataReportList(ExpenseTrackerBean expenseTrackerBean){
 		Map<String, Object> hm= new HashMap<String, Object>();
 		List<ExpenseTrackerBean> expenseTrackerDataReportList= expenseTrackerDao.getExpenseTrackerDataReportList(expenseTrackerBean);
-		System.out.println("expenseTrackerDataReportList..."+expenseTrackerDataReportList.size());
 		int recordsTotal=expenseTrackerDataReportList.size();
 		hm.put("data", expenseTrackerDataReportList);
 		hm.put("recordsTotal", recordsTotal);
 		return hm;
 	}
 	
-	/*
-	 * public Map<String, Object>
-	 * getExpenseTrackerExcelReportList(HttpServletResponse
-	 * response,ExpenseTrackerBean expenseTrackerBean) {
-	 * 
-	 * 
-	 * HSSFWorkbook workbook= new HSSFWorkbook(); }
-	 */
-	
-	
-	
+	public Map<String, Object> getExpenseTrackerExcelReportList(ExpenseTrackerBean expenseTrackerBean)  {
+		
+		List<ExpenseTrackerBean> expenseTrackerDataReportList= expenseTrackerDao.getExpenseTrackerDataReportList(expenseTrackerBean);
+
+		return writeExcelReport(expenseTrackerBean, expenseTrackerDataReportList, "EXPENSE_TRACKER_DATA_EXCEL");
+		
+	}
+
 }

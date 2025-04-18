@@ -17,11 +17,9 @@
 	 <span style="color: red;font-weight:bold;">Welcome To Central Management System</span> 
 	 <!-- <spring:message code="label.centralMgmtSys"/> -->
 	</label>
-	
-	<a href="#"  ng-click="goToExpenseTracker()"><img src="staticResources/expenseTracker/images/expenseApp.jpg" title="expense" border="0">
-	</a>
-	
-	 
+	<a href="/cmsportal/spring/expenseTrackerHome">
+        <img src="staticResources/expenseTracker/images/expenseApp.jpg">
+    </a>
 </form>
 </div>
 </body>

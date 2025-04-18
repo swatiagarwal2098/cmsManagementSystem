@@ -4,7 +4,40 @@ mainApp.service('expenseReportService', function($http) {
 	
 	var _this = this;
 	
-	this.getExpenseTrackerDataReportList = function($scope, inputJson) {
+	
+	
+});
+
+
+mainApp.controller("expenseTrackerReport", function($scope,$http, $window, expenseCommonService, expenseReportService){
+	$scope.showTableDiv = false;
+	$scope.onLoad= function(){
+		expenseCommonService.getMonthComboList($scope);
+		$scope.monthComboList = [{ 'key': '-1', 'value': '--All--'}];
+		expenseCommonService.getCategoryComboList($scope);
+		expenseCommonService.getPaymentModeComboList($scope);
+	}
+	
+	$scope.viewReport= function(){
+		let month= $("#month").val();
+		let category= $("#category").val();
+		let paymentMode= $("#paymentMode").val();
+		
+		if(category== null || category =='-1'){
+			alert("Select category");
+			$("#category").focus();
+			return false;
+		}else if(paymentMode== null || paymentMode =='-1'){
+			alert("Select payment mode");
+			$("#paymentMode").focus();
+			return false;
+		}
+		let inputJson= {'month' : month, 'category': category, 'paymentMode': paymentMode};
+		$scope.getExpenseTrackerDataReportList($scope,inputJson);
+		
+	}
+	
+	$scope.getExpenseTrackerDataReportList = function($scope, inputJson) {
 		$scope.showTableDiv = true;
 		var table = $('#dataTable').dataTable({
 			dom: 'lBrt',
@@ -54,10 +87,10 @@ mainApp.service('expenseReportService', function($http) {
 				
 			],
 			initComplete: function(settings, json) {
-				/*if(json.sessionExpired=="Y"){
+				if(json.sessionExpired=="Y"){
 					alert("Your Session has been expired!");
 					$window.location.href = "/cmsportal/spring/login/logout";
-				}*/
+				}
 				$("#totalCount").html(json.recordsTotal);
 			//	resizeDataTableWithPagination('dataTable', 'tableDiv1', 160);
 				//$(".accordion-toggle").click();
@@ -67,59 +100,22 @@ mainApp.service('expenseReportService', function($http) {
 		   
 	};
 	
-});
-
-
-mainApp.controller("expenseTrackerReport", function($scope,$http, $window, expenseCommonService, expenseReportService){
-	$scope.showTableDiv = false;
-	$scope.onLoad= function(){
-		expenseCommonService.getMonthComboList($scope);
-		$scope.monthComboList = [{ 'key': '-1', 'value': '--All--'}];
-		expenseCommonService.getCategoryComboList($scope);
-		expenseCommonService.getPaymentModeComboList($scope);
-	}
-	
-	$scope.viewReport= function(){
-		let month= $("#month").val();
-		let category= $("#category").val();
-		let paymentMode= $("#paymentMode").val();
-		
-		if(category== null || category =='-1'){
-			alert("Select category");
-			$("#category").focus();
-			return false;
-		}else if(paymentMode== null || paymentMode =='-1'){
-			alert("Select payment mode");
-			$("#paymentMode").focus();
-			return false;
-		}
-		let inputJson= {'month' : month, 'category': category, 'paymentMode': paymentMode};
-		expenseReportService.getExpenseTrackerDataReportList($scope,inputJson);
-		
-	}
-	
 	$scope.downloadExcelReport = function() {
 		let month= $("#month").val();
 		let category= $("#category").val();
 		let paymentMode= $("#paymentMode").val();
 		let reportCaption = 'EXPENSE TRACKER ANALYSIS REPORT';
 		let reportName = 'EXPENSE TRACKER ANALYSIS REPORT';
-		
 		var url = "getExpenseTrackerExcelReportList";
 		let inputJson= {'month' : month, 'category': category, 'paymentMode': paymentMode, 'reportCaption':reportCaption, 'reportName': reportName };
-		
 		var responsePromise = $http.post(url, inputJson);
 		responsePromise.success(function(data, status, headers, config) {
 			if (data.success == 'success') {
 				$window.location.href = data.fileName;
-			} else if (data.success == 'error') {
-				alert($scope.translation.ERROR_MSG_EXPORT_EXCEL);
-			}
-			$('#progressModal_2').modal('hide');
+			} 
 		});
 		responsePromise.error(function(data, status, headers, config) {
-			$('#progressModal').modal('hide');
-			alert("error  " + data);
+			alert("Error occurred, while calling web services");	
 		});
 	};
 	

@@ -50,8 +50,8 @@ public class ExpenseTrackerRestController {
 	@RequestMapping(value="/addExpenseData", method= RequestMethod.POST)
 	public ResponseEntity<Map<String, Object>> addExpenseData(@RequestBody ExpenseTrackerBean expenseTrackerBean,HttpServletRequest request, HttpSession session){
 		Map<String, Object> hm= new HashMap<String, Object>();
+		System.out.println("rest..........");
 		LoginBean loginBean= new LoginBean();
-		System.out.println("session.getAttribute(\"sessExpenseUserInfo\")...."+session.getAttribute("sessExpenseUserInfo"));
 		if(session.getAttribute("sessExpenseUserInfo")!=null) {
 			loginBean = (LoginBean)session.getAttribute("sessExpenseUserInfo");
 			expenseTrackerBean.setUserId(loginBean.getUserId());
@@ -106,23 +106,21 @@ public class ExpenseTrackerRestController {
 			loginBean = (LoginBean)session.getAttribute("sessExpenseUserInfo");
 			expenseTrackerBean.setUserId(loginBean.getUserId());
 			hm= expenseTrackerService.getExpenseTrackerDataReportList(expenseTrackerBean);
+		}else {
+			hm.put("sessionExpired", "Y");
 		}
 		
 		return new ResponseEntity<Map<String, Object>>(hm, HttpStatus.OK);
 	}
 	
-	/*
-	 * @RequestMapping(value="/getExpenseTrackerExcelReportList", method=
-	 * RequestMethod.POST) public ResponseEntity<Map<String, Object>>
-	 * getExpenseTrackerExcelReportList(@RequestBody ExpenseTrackerBean
-	 * expenseTrackerBean,HttpServletRequest request, HttpSession session,
-	 * HttpServletResponse response){ Map<String, Object> hm= new HashMap<String,
-	 * Object>(); LoginBean loginBean= new LoginBean();
-	 * if(session.getAttribute("sessExpenseUserInfo")!=null) { loginBean =
-	 * (LoginBean)session.getAttribute("sessExpenseUserInfo");
-	 * expenseTrackerBean.setUserId(loginBean.getUserId()); //hm=
-	 * expenseTrackerService.getExpenseTrackerExcelReportList(expenseTrackerBean); }
-	 * return new ResponseEntity<Map<String, Object>>(hm, HttpStatus.OK); }
-	 */
-
+	@RequestMapping(value="/getExpenseTrackerExcelReportList", method= RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> getExpenseTrackerExcelReportList(@RequestBody ExpenseTrackerBean expenseTrackerBean,HttpServletRequest request, HttpSession session, HttpServletResponse response){
+		Map<String, Object> hm= new HashMap<String, Object>();
+		LoginBean loginBean= new LoginBean();
+			loginBean = (LoginBean)session.getAttribute("sessExpenseUserInfo");
+			expenseTrackerBean.setUserId(loginBean.getUserId());
+			hm= expenseTrackerService.getExpenseTrackerExcelReportList(expenseTrackerBean);
+		
+		return new ResponseEntity<Map<String, Object>>(hm, HttpStatus.OK);
+	}
 }

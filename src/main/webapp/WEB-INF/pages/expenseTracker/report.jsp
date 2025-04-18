@@ -273,7 +273,7 @@ body {
 						<thead>
 							<tr>
 								<th >Month</th>
-								<th >Expense Made By</th>
+								<th >Spend By</th>
 								<th >Date</th>
 								<th >Category</th>
 								<th >Payment Mode</th>

@@ -195,15 +195,15 @@ body {
 		</select>
 	</div>
 	
-	<div class= "panelHeading display">
+	<!-- <div class= "panelHeading display">
 		<label for="ExpenseMadeBy" class="labelWidth">Spend By</label> 
 		<select class="combo-input" name="expenseMadeBy" id="expenseMadeBy" >
 		<option value="-1">--Select--</option>
 		<option value="Swati">Swati</option>
 		<option value="Subham">Subham</option>
-		<option value="Manoj">Manoj</option> 
+		
 		</select>
-	</div>
+	</div> -->
 	
 	<div class= "panelHeading display"> 
 		<label for="selectDate" class="labelWidth">Select Date</label>
@@ -250,7 +250,6 @@ body {
 				<thead>
 					<tr>
 						<th style="width: 8%;" >Month</th>
-						<th style="width: 8%;">Spend By</th>
 						<th style="width: 10%;">Date</th>
 						<th style="width: 10%;">Category</th>
 						<th style="width: 10%;">Payment Mode</th>
@@ -263,7 +262,6 @@ body {
 					<tr id=tr{{$index}} class="tbldata" ng-repeat="expenseData in expenseDataList">
 						<!-- <td style="width: 2%;" ng-cloak>{{$index+1}}</td> -->
 						<td style="width: 8%;" ng-cloak>{{expenseData.month}}</td>
-						<td style="width: 8%;" ng-cloak>{{expenseData.expenseMadeBy}}</td>
 						<td style="width: 10%;" ng-cloak>{{expenseData.date}}</td>
 						<td style="width: 10%;" ng-cloak>{{expenseData.category}}</td>
 						<td style="width: 10%;" ng-cloak>{{expenseData.paymentMode}}</td>
