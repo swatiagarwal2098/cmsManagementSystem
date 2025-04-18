@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,11 +99,30 @@ public class ExpenseTrackerRestController {
 	}
 	
 	@RequestMapping(value="/getExpenseReportList", method= RequestMethod.POST)
-	public ResponseEntity<Map<String, Object>> getExpenseTrackerDataReportList(){
+	public ResponseEntity<Map<String, Object>> getExpenseTrackerDataReportList(@RequestBody ExpenseTrackerBean expenseTrackerBean,HttpServletRequest request, HttpSession session){
 		Map<String, Object> hm= new HashMap<String, Object>();
-		hm= expenseTrackerService.getExpenseTrackerDataReportList();
+		LoginBean loginBean= new LoginBean();
+		if(session.getAttribute("sessExpenseUserInfo")!=null) {
+			loginBean = (LoginBean)session.getAttribute("sessExpenseUserInfo");
+			expenseTrackerBean.setUserId(loginBean.getUserId());
+			hm= expenseTrackerService.getExpenseTrackerDataReportList(expenseTrackerBean);
+		}
+		
 		return new ResponseEntity<Map<String, Object>>(hm, HttpStatus.OK);
 	}
 	
+	/*
+	 * @RequestMapping(value="/getExpenseTrackerExcelReportList", method=
+	 * RequestMethod.POST) public ResponseEntity<Map<String, Object>>
+	 * getExpenseTrackerExcelReportList(@RequestBody ExpenseTrackerBean
+	 * expenseTrackerBean,HttpServletRequest request, HttpSession session,
+	 * HttpServletResponse response){ Map<String, Object> hm= new HashMap<String,
+	 * Object>(); LoginBean loginBean= new LoginBean();
+	 * if(session.getAttribute("sessExpenseUserInfo")!=null) { loginBean =
+	 * (LoginBean)session.getAttribute("sessExpenseUserInfo");
+	 * expenseTrackerBean.setUserId(loginBean.getUserId()); //hm=
+	 * expenseTrackerService.getExpenseTrackerExcelReportList(expenseTrackerBean); }
+	 * return new ResponseEntity<Map<String, Object>>(hm, HttpStatus.OK); }
+	 */
 
 }

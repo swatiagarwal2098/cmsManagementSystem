@@ -14,6 +14,8 @@ public class ExpenseTrackerBean {
 	private String itemId;
 	private String actionFlag;
 	private String userId;
+	private String reportCaption;
+	private String reportName;
 	
 	
 	public String getValue() {
@@ -87,6 +89,18 @@ public class ExpenseTrackerBean {
 	}
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+	public String getReportCaption() {
+		return reportCaption;
+	}
+	public void setReportCaption(String reportCaption) {
+		this.reportCaption = reportCaption;
+	}
+	public String getReportName() {
+		return reportName;
+	}
+	public void setReportName(String reportName) {
+		this.reportName = reportName;
 	}
 
 	

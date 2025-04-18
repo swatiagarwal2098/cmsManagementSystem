@@ -25,13 +25,7 @@ public class ExpenseTrackerMainController {
 	
 	
 	@RequestMapping(value="/master", method=RequestMethod.GET)
-	public String displayExpenseTrackerMaster(HttpServletRequest request, HttpSession session, LoginBean loginBean, Model model) {
-		if(session.getAttribute("sessExpenseUserInfo")!=null) {
-			loginBean.setUserId(((LoginBean) session.getAttribute("sessExpenseUserInfo")).getUserId());
-			model.addAttribute("userId",loginBean.getUserId());
-		}else {
-			String url= "redirect:/spring/login/logout";
-		}
+	public String displayExpenseTrackerMaster() {
 		return "expenseTracker/master";
 	}
 	

@@ -22,7 +22,7 @@ public interface ExpenseTrackerDao {
 
 	int deleteExpenseItemRecord(ExpenseTrackerBean expenseTrackerBean);
 
-	List<ExpenseTrackerBean> getExpenseTrackerDataReportList();
+	List<ExpenseTrackerBean> getExpenseTrackerDataReportList(ExpenseTrackerBean expenseTrackerBean);
 
 	
 

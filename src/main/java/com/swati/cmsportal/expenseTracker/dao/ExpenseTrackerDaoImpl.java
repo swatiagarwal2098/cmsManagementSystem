@@ -131,8 +131,16 @@ public class ExpenseTrackerDaoImpl implements ExpenseTrackerDao {
 	}
 	
 	@Override
-	public List<ExpenseTrackerBean> getExpenseTrackerDataReportList(){
-		String sqlQuery= "Select * from cms_user_expense_data";
+	public List<ExpenseTrackerBean> getExpenseTrackerDataReportList( ExpenseTrackerBean expenseTrackerBean){
+		System.out.println("expenseTrackerBean...."+expenseTrackerBean.getMonth());
+		String strAppendQuery="";
+		strAppendQuery= " userId="+"'"+expenseTrackerBean.getUserId()+"'"+" and month= "+"'"+expenseTrackerBean.getMonth()+"'"+" and category="+"'"+expenseTrackerBean.getCategory()+"'"+" and paymentMode="+"'"+expenseTrackerBean.getPaymentMode()+"'";
+		if("-1".equals(expenseTrackerBean.getMonth())) {
+			strAppendQuery= " userId="+"'"+expenseTrackerBean.getUserId()+"'"+" and category="+"'"+expenseTrackerBean.getCategory()+"'"+" and paymentMode="+"'"+expenseTrackerBean.getPaymentMode()+"'";
+		}
+		
+		String sqlQuery= "Select * from cms_user_expense_data where "+strAppendQuery;
+		System.out.println("sqlQuery..."+sqlQuery);
 		RowMapper<ExpenseTrackerBean> mapper=(rs, rowNum)->{
 			ExpenseTrackerBean expenseBeanObj= new ExpenseTrackerBean();
 			expenseBeanObj.setMonth(rs.getString("month"));

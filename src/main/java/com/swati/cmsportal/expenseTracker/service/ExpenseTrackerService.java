@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -71,11 +74,25 @@ public class ExpenseTrackerService {
 		return hm;
 	}
 	
-	public Map<String, Object> getExpenseTrackerDataReportList(){
+	public Map<String, Object> getExpenseTrackerDataReportList(ExpenseTrackerBean expenseTrackerBean){
 		Map<String, Object> hm= new HashMap<String, Object>();
-		List<ExpenseTrackerBean> expenseTrackerDataReportList= expenseTrackerDao.getExpenseTrackerDataReportList();
+		List<ExpenseTrackerBean> expenseTrackerDataReportList= expenseTrackerDao.getExpenseTrackerDataReportList(expenseTrackerBean);
+		System.out.println("expenseTrackerDataReportList..."+expenseTrackerDataReportList.size());
+		int recordsTotal=expenseTrackerDataReportList.size();
 		hm.put("data", expenseTrackerDataReportList);
+		hm.put("recordsTotal", recordsTotal);
 		return hm;
 	}
+	
+	/*
+	 * public Map<String, Object>
+	 * getExpenseTrackerExcelReportList(HttpServletResponse
+	 * response,ExpenseTrackerBean expenseTrackerBean) {
+	 * 
+	 * 
+	 * HSSFWorkbook workbook= new HSSFWorkbook(); }
+	 */
+	
+	
 	
 }
