@@ -46,6 +46,7 @@ body {
     	margin-left: 80px;
     	background-color: rgba(20, 117, 188, .8);
     	height: 40px;
+    	padding-top: 10px;
     }
     .pageHeader{
     	margin-left: 80px;
@@ -163,6 +164,10 @@ body {
 	}
 
 </style>
+
+
+
+
 <title>Expense Tracker Home</title>
 
 </head>
@@ -172,7 +177,10 @@ body {
 <input type="hidden" id="hdnUserId" name="hdnUserId" value="${userId}"/>
 	<div class="h2" >
 		<label style="font-size: 165%;padding-left: 0px;">
-		 <span style="color: white;font-weight:bold; ">Expense Tracker Master</span> 
+		 <span style="color: white;font-weight:bold; ">Expense Tracker Master
+		 <span><a href="/cmsportal/spring/login/logout"><img src="staticResources/expenseTracker/images/logout.png" width="25" height="25" title="Logout" style="vertical-align: top; float: right" border="0"></a>
+		 </span> 
+		 </span> 
 		</label>
 	</div>
 	
@@ -277,6 +285,10 @@ body {
 			</table>
 		</div>
 </form>
+
+
+
+
 </div>
 </body>
 </html>

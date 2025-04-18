@@ -14,16 +14,20 @@ mainApp.controller("expenseTrackerReport", function($scope,$http, $window, expen
 	$scope.onLoad= function(){
 		expenseCommonService.getMonthComboList($scope);
 		$scope.monthComboList = [{ 'key': '-1', 'value': '--All--'}];
-		expenseCommonService.getCategoryComboList($scope);
+		
+		
+		/*expenseCommonService.getCategoryComboList($scope);
+		$scope.categoryComboList = [{ 'key': '-1', 'value': '--All--'}];
 		expenseCommonService.getPaymentModeComboList($scope);
+		$scope.paymentComboList = [{ 'key': '-1', 'value': '--All--'}];*/
 	}
 	
 	$scope.viewReport= function(){
 		let month= $("#month").val();
-		let category= $("#category").val();
-		let paymentMode= $("#paymentMode").val();
+		//let category= $("#category").val();
+		//let paymentMode= $("#paymentMode").val();
 		
-		if(category== null || category =='-1'){
+		/*if(category== null || category =='-1'){
 			alert("Select category");
 			$("#category").focus();
 			return false;
@@ -31,8 +35,8 @@ mainApp.controller("expenseTrackerReport", function($scope,$http, $window, expen
 			alert("Select payment mode");
 			$("#paymentMode").focus();
 			return false;
-		}
-		let inputJson= {'month' : month, 'category': category, 'paymentMode': paymentMode};
+		}*/
+		let inputJson= {'month' : month};
 		$scope.getExpenseTrackerDataReportList($scope,inputJson);
 		
 	}

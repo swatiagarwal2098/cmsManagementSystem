@@ -139,12 +139,12 @@ public class ExpenseTrackerDaoImpl implements ExpenseTrackerDao {
 		if("1".equals(expenseTrackerBean.getUserId())) {   // for admin
 			strAppendQuery= " and month= "+"'"+expenseTrackerBean.getMonth()+"'"+" and category="+"'"+expenseTrackerBean.getCategory()+"'"+" and paymentMode="+"'"+expenseTrackerBean.getPaymentMode()+"'";
 			if("-1".equals(expenseTrackerBean.getMonth())) {
-				strAppendQuery= " and category="+"'"+expenseTrackerBean.getCategory()+"'"+" and paymentMode="+"'"+expenseTrackerBean.getPaymentMode()+"'";
+				strAppendQuery= "";
 			}
 		}else if(!"1".equals(expenseTrackerBean.getUserId())) {
 			strAppendQuery= " and userId="+"'"+expenseTrackerBean.getUserId()+"'"+" and month= "+"'"+expenseTrackerBean.getMonth()+"'"+" and category="+"'"+expenseTrackerBean.getCategory()+"'"+" and paymentMode="+"'"+expenseTrackerBean.getPaymentMode()+"'";
 			if("-1".equals(expenseTrackerBean.getMonth())) {
-				strAppendQuery= " and userId="+"'"+expenseTrackerBean.getUserId()+"'"+" and category="+"'"+expenseTrackerBean.getCategory()+"'"+" and paymentMode="+"'"+expenseTrackerBean.getPaymentMode()+"'";
+				strAppendQuery= "";
 			}
 			
 		}

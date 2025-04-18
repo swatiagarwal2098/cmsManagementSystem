@@ -65,6 +65,7 @@ body {
     	margin-left: 80px;
     	background-color: rgba(20, 117, 188, .8);
     	height: 40px;
+    	padding-top: 10px;
     }
     .pageHeader{
     	margin-left: 80px;
@@ -189,7 +190,12 @@ body {
 <form>
 	<div class="h2" >
 		<label style="font-size: 165%;padding-left: 0px;">
-		 <span style="color: white;font-weight:bold; ">Expense Tracker : Report</span> 
+		 <span style="color: white;font-weight:bold; ">Expense Tracker : Report
+		 <span><a href="/cmsportal/spring/login/logout"><img src="staticResources/expenseTracker/images/logout.png" width="25" height="25" title="Logout" style="vertical-align: top; float: right" border="0"></a>
+		</span>
+		
+		 </span> 
+		
 		</label>
 	</div>
 	<div  class="sidenav">
@@ -222,7 +228,7 @@ body {
 		<label for="selectDate" class="labelWidth">Select Date</label>
 		<input class="date-input" type="date" name="date" id="date" placeholder="dd-mm-yyyy">
 	</div>  -->
-	<div class= "panelHeading display">
+	<!-- <div class= "panelHeading display">
 		<label for="selectCategory" class="labelWidth"> Category</label> 
 		<select class="combo-input" name="category"  id="category" ng-model="category" ng-options="category.value for category in categoryComboList track by category.key"
 			style="font-weight: 500; width: 10%;" >
@@ -233,7 +239,7 @@ body {
 		<select class="combo-input" name="paymentMode"  id="paymentMode" ng-model="paymentMode" ng-options="paymentMode.value for paymentMode in paymentComboList track by paymentMode.key"
 			style="font-weight: 500; ">
 		</select>
-	</div>
+	</div> -->
 	<!-- <div class= "panelHeading marginTop">
 		<label for="desc" class="labelWidth"> Description</label> 
 		<input class="textBox-input" type='text'   name="desc" id="desc" ng-model="desc" placeholder="Enter Description" />
@@ -293,6 +299,8 @@ $(document).ready(function() {
 
 	
 });
+
+
 </script>
 </div>
 </body>
