@@ -11,15 +11,20 @@
  	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" ></script>
 </head>
 <body>
-<div ng-app="mainApp" ng-controller="mainController" >
+<div >
 <form>
 	<label class="h2" style="font-size: 165%;padding-left: 0px;">
 	 <span style="color: red;font-weight:bold;">Welcome To Central Management System</span> 
 	 <!-- <spring:message code="label.centralMgmtSys"/> -->
 	</label>
+	<div>
+	
 	<a href="/cmsportal/spring/expenseTrackerHome">
-        <img src="staticResources/expenseTracker/images/expenseApp.jpg">
+        <img src="staticResources/expenseTracker/images/edit.png">
     </a>
+ 
+ 
+	</div>
 </form>
 </div>
 </body>

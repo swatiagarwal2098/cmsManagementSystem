@@ -32,9 +32,9 @@
 	 <span style="color: red;font-weight:bold;margin-left: 100px;">Central Management System</span> 
 	 <!-- <spring:message code="label.centralMgmtSys"/> -->
 	</label>
-	 <div>
+	 <div style="margin-top:15px">
 	 	<button style="margin-left: 100px;height: 30px;" type="button" ng-click="openSignUpSignInPage('newUser');">New User</button>
-		<button type="button" ng-click="openSignUpSignInPage('existingUser');" >Existing User</button>
+		<button style="height: 30px;" type="button" ng-click="openSignUpSignInPage('existingUser');" >Existing User</button>
 	 </div>
 </form>
 </div>
